@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <title>method,property</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 2;
+        }
+
+        html {
+            font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", "メイリオ", sans-serif;
+            font-size: 62.5%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        strong {
+            color: darkred;
+            font-size: 1.1em;
+        }
+
+        span {
+            font-size: 1.4rem;
+            color: orangered;
+        }
+
+        pre {
+            font-size: 1.2em;
+        }
+
+        body {
+            padding: 0 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background-color: #e5f2e5;
+            color: #481700;
+        }
+
+        main {
+            display: block;
+        }
+
+        .list {
+            display: grid;
+            grid-template: auto/repeat(auto-fit, minmax(150px, 1fr));
+            grid-gap: 10px;
+            background-color: #333;
+            padding: 10px;
+        }
+
+        .tl {
+            font-size: 2rem;
+            color: #333;
+            background-color: orange;
+            padding-left: 1em;
+            /*            border-right: 10px solid black;*/
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .info {
+            /*            display: none;*/
+        }
+
+        dl {
+            margin: 50px 0 0;
+            border-bottom: 10px solid #666;
+        }
+
+        dt {
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+
+        dd {
+            margin-top: 4px;
+            padding: 0 20px 10px;
+        }
+
+        dt:before {
+            content: "";
+            display: inline-block;
+            background-color: orangered;
+            width: 1em;
+            height: 1em;
+            margin-right: 6px;
+        }
+
+        img {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .ex {
+            margin-left: 60px;
+            position: relative;
+            overflow: auto;
+            width: 300px;
+            height: 100px;
+            background-color: palegreen;
+            border-top: 22px solid red;
+        }
+
+        .inner {
+            /*            width: 500px;*/
+            height: 1000px;
+            background-color: indianred;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="display"></div>
+        <ul class="list">
+            <li class="tl">css</li>
+            <li class="tl">IE</li>
+            <li class="tl">ios</li>
+            <li class="tl">command</li>
+            <li class="tl">git</li>
+            <li class="tl">要素取得(js)</li>
+            <li class="tl">event(js)</li>
+            <li class="tl">順番処理、反復処理(js)</li>
+            <li class="tl">W, H, 位置(js)</li>
+        </ul>
+
+        <ul>
+            <li class="info">
+                <h2>css</h2>
+                <dl>
+                    <dt>background 一括指定</dt>
+                    <dd>
+                        <p>ex:</p>
+                        <p>background: center / 50% no-repeat url("../../media/examples/firefox-logo.svg"),red 10% 30%/40% 60% no-repeat url("../../media/examples/lizard.png");</p>
+                    </dd>
+                    <dd>
+                        ●<u>順番任意だが</u>、<strong>background-sizeが指定するなら</strong>、必ずbackground-positionの直後に"<u>「background-position」 / 「background-szie」</u>"の順番で入力すること<br>
+                    </dd>
+                    <dd>
+                        ●例：「center / 50%」&rArr;「background-position: center center; background-size: 50% 50%;」<br>
+                        「10% 30%/40% 60%」&rArr;「background-position-x: 10%;background-position-y: 30%; background-size: 40% 60%;」
+                    </dd>
+                    <dd>
+                        ●exのように、複数背景を指定することが可能だ。<br>
+                        ただ、最後の一枚だけにbackground-colorを指定できる
+                    </dd>
+                </dl>
+            </li>
+
+            <li class="info">
+                <h2>IE</h2>
+                <dl>
+                    <dt>
+                        min-heightが効かない対策
+                    </dt>
+                    <dd>
+                        <p>ex:</p>
+                        &lt;div class="target"&gt;<br>
+                        .target{
+                        display: flex;
+                        min-height: 100%;
+                        }
+                    </dd>
+                    <dd>IEは<u>display:flexの要素にmin-heightが無効</u>、ただ、<strong>flexの子要素にはmin-heightが効く</strong>、そのためtargetの外にwarp要素を設けて認識されるようになる</dd>
+                    <dd>例：<br>&lt;div class="wrap"&gt;<br>
+                        &emsp;&lt;div class"target"&gt;&lt;/div&gt;<br>&lt;/div&gt;
+                        <br>
+                        .wrap{display: flex;}
+                    </dd>
+                </dl>
+            </li>
+
+            <li class="info">
+                <h2>ios</h2>
+                <dl>
+                    <dt>Full screen 表示したい画像iosだとover scroll して、空白が見えてしまうに対する対策</dt>
+                    <dd>
+                        <p>ex:</p>
+                        target {
+                        position: fixed;
+                        width: 100%;
+                        height: 120vh;
+                        top: 0;
+                        left: 0;
+                        transform: translate(0, -10%);
+                        background: center/cover no-repeat;
+                        }
+                    </dd>
+                    <dd>縦幅をfull screen　より多めに設定することで空白見えなくなる（transformではなくtop: -10%するには空白は見える）</dd>
+                </dl>
+            </li>
+
+            <li class="info">
+                <h2>command</h2>
+                <dl>
+                    <dt>ファイル作成</dt>
+                    <dd>touch ファイル名.拡張子</dd>
+                </dl>
+                <dl>
+                    <dt>ファイルの中身を表示する</dt>
+                    <dd>cat ファイル名.拡張子</dd>
+                </dl>
+                <dl>
+                    <dt>ディレクトリを作成</dt>
+                    <dd>mkdir ディレクトリ名</dd>
+                    <dd>「make directory」</dd>
+                </dl>
+                <dl>
+                    <dt>カレントディレクトリ</dt>
+                    <dd>自分が今いるディレクトリ</dd>
+                </dl>
+                <dl>
+                    <dt>ディレクトリ間を移動(同階層、下階層)</dt>
+                    <dd>cd ディレクトリ名</dd>
+                </dl>
+                <dl>
+                    <dt>ルートディレクトリ</dt>
+                    <dd>/</dd>
+                </dl>
+                <dl>
+                    <dt>カレントディレクトリを確認</dt>
+                    <dd>pwd</dd>
+                    <dd>「print working directory」</dd>
+                </dl>
+                <dl>
+                    <dt>ディレクトリの中身を表示</dt>
+                    <dd>ls</dd>
+                    <dd>「list」</dd>
+                    <dd>表示範囲:カレントディレクトリの直下だけ</dd>
+                </dl>
+                <dl>
+                    <dt>親ディレクトリへの移動</dt>
+                    <dd>●1つ親のディレクトリ</dd>
+                    <dd><mark><strong>..</strong></mark></dd>
+                    <dd>cd ..</dd>
+                    <dd>●ホームディレクトリ</dd>
+                    <dd>cd</dd>
+                </dl>
+                <dl>
+                    <dt>ファイル/ディレクトリごとの場所を移動</dt>
+                    <dd>mv 移動させたいファイル名/移動させたいディレクトリ名 移動先のディレクトリ名</dd>
+                    <dd>「move」</dd>
+                </dl>
+                <dl>
+                    <dt>ファイル名/ディレクトリ名を変更</dt>
+                    <dd>mv 現在のファイル名/ディレクトリ名 新しいファイル名/ディレクトリ名</dd>
+                </dl>
+                <dl>
+                    <dt>ファイル/ディレクトリのコピー</dt>
+                    <dd>cp コピーするファイル名 新しいファイル名</dd>
+                    <dd>「copy」</dd>
+                    <dd>cp <mark><strong>-r</strong></mark> コピーするディレクトリ名　新しいディレクトリ名</dd>
+                </dl>
+                <dl>
+                    <dt>ファイル/ディレクトリの削除</dt>
+                    <dd>rm 削除するファイル名</dd>
+                    <dd>「remove」</dd>
+                    <dd>rm <mark><strong>-r</strong></mark> 削除するディレクトリ名</dd>
+                </dl>
+            </li>
+
+            <li class="info">
+                <dl>
+                    <dt>初期化-initialize</dt>
+                    <dd>git init</dd>
+                </dl>
+                <dl>
+                    <dt>共有するファイルを追加</dt>
+                    <dd>git add ファイル名</dd>
+                </dl>
+                <dl>
+                    <dt>コミットする</dt>
+                    <dd>git commit -m "メッセージ"</dd>
+                </dl>
+                <dl>
+                    <dt>リモートを登録</dt>
+                    <dd>git remote add リモート名 URL</dd>
+                </dl>
+                <dl>
+                    <dt>リモートにファイルをアップロード/ダウンロードする</dt>
+                    <dd>git push リモート名 master</dd>
+                    <dd>git pull リモート名 master</dd>
+                </dl>
+                <dl>
+                    <dt>変更したファイルを把握</dt>
+                    <dd>git status</dd>
+                </dl>
+                <dl>
+                    <dt>変更内容を表示</dt>
+                    <dd>git diff</dd>
+                </dl>
+            </li>
+
+
+            <li class="info">
+                <h2>要素取得(js)</h2>
+                <dl>
+                    <dt></dt>
+                    <dd></dd>
+                </dl>
+            </li>
+
+            <li class="info">
+                <h2>event(js)</h2>
+                <dl>
+                    <dt>イベントハンドラー/イベントリスナーを定義する3つ方法</dt>
+                    <dd>
+                        1.タグ内の属性として宣言する
+
+                    </dd>
+                    <dd>
+                        2.要素オブジェクトのプロパティとして宣言する
+                    </dd>
+                    <dd>3.addEventListener メソッドを使って宣言する</dd>
+                </dl>
+
+                <dl>
+                    <dt>beforeunload</dt>
+                    <dd>
+                        window.addEventListener('beforeunload', function(evt) {
+                        evt.preventDefault();
+                        evt.returnValue = '';
+                        });
+
+                    </dd>
+                </dl>
+            </li>
+            <li class="info">
+                <h2>順番処理、反復処理(js)</h2>
+                <dl>
+                    <dt>forEach <span>[配列]を順番で指定した関数で処理する</span></dt>
+                    <dd>
+                        <pre>[配列].forEach();<br>var array1 = [2,3,4,5];<br>array1.forEach( function( <mark>v, i, a</mark> ){
+                            });</pre>
+                    </dd>
+                    <dd>v&rarr;要素の値<br>
+                        i&rarr;インデックス番号<br>
+                        a&rarr;元の配列</dd>
+                </dl>
+                <dl>
+                    <dt>for <span>ループ処理</span></dt>
+                    <dd>
+                        <pre>for(初期化式 <mark>var i = 0</mark>; ループ継続条件式 <mark>i &lt; 9</mark>; 増減式 <mark>i++</mark>){
+                        }</pre>
+                    </dd>
+                    <dd>●実行順番：初期化式&rarr;条件式（true）&rarr;増減式&rarr;条件式...</dd>
+                </dl>
+                <dl>
+                    <dt>for in <span>{オブジェクト}を順番で処理する</span></dt>
+                    <dd>
+                        <pre>for( 仮変数 <mark>var key</mark> in {オブジェクト} <mark>obj1</mark> ){
+                        }<br>var obj1 = { apple:150,orange:100,banana:120 };<br>for(var key in obj1){
+                        console.log(key + obj1[key]);
+                        }</pre>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>for of (ES2015) <span>[配列（列挙可能なオブジェクト）]を順番で処理する</span></dt>
+                    <dd>
+                        <pre>for( 仮変数 <mark>var value</mark> of [列挙可能なオブジェクト] <mark>array1</mark> ){
+                        }<br>var array1 = [ 'apple', 'banana', 'orange' ];<br>for(var value in array1){
+                        console.log(value);
+                        }</pre>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>switch</dt>
+                    <dd>
+                        <pre>switch(式){
+                            case 値1:
+                            break;<strong>(breakがないとそのまま下へ順番に実行する)</strong>
+                            case 値2:
+                            break;
+                            ...
+                            default:<mark>(省略できるが、書くことが推奨される)</mark>
+                            break;
+                            }</pre>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>while/do while</dt>
+                    <dd>
+                        <pre>while(条件式 <u>x &lt; 10</u>){
+                       }</pre>
+                        <pre>do{
+                       }while(条件式 <u>x &lt; 10</u>)<strong><mark><u>;</u></mark></strong></pre>
+                    </dd>
+                    <dd>while と do while の違い<br>
+                        while&rArr;前置判断（先に条件を判定し、あっていなければ一度も実行しない）<br>
+                        do while&rArr;後置判断（一回実行してから条件を判定する、つまり<strong>最低一回実行することが担保される</strong>）</dd>
+                </dl>
+            </li>
+
+            <li class="info">
+                <h2>W, H, 位置(js)</h2>
+                <dl>
+                    <dt>clientHeight (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].clientHeight;</p>
+                        <p>$(".ex").innerHeight();</p>
+                        <img src="../img/clientHeight.png" alt="">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>offsetHeight (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].offsetHeight;</p>
+                        <p>$(".ex").outerHeight()</p>
+                        <img src="../img/offsetHeight.png" alt="">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>scrollHeight (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].scrollHeight;</p>
+                        <p>--The following equivalence returns true if an element is at the end of its scroll, false if it isn't.</p>
+                        <p>--element.scrollHeight - element.scrollTop === element.clientHeight</p>
+                        <p>*overflowの設定に関係なく、同じ数値が返る</p>
+                        <img src="../img/scrollHeight.png" alt="">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>scrollTop (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].scrollTop;</p>
+                        <p>window.pageYOffsetはwindowだけのスクロール量を返す</p>
+                        <p>上へスクロールした分の数値</p>
+                        <p>targetの先頭からtargetのtop枠まで（border-topを含む）</p>
+                        <img src="../img/scrollTop.png" alt="">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>clientTop (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].clientTop;</p>
+                        <p>border-topの数値を返す</p>
+                        <img src="../img/clientTop.png" alt="">
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>offsetTop (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].offsetTop;</p>
+                        <p>●自身から一番近い、スタイルシートのpositionプロパティが"static"ではない<strong>祖先要素</strong>に対する位置を返す<br>●<strong>該当する要素がない場合</strong>、<u>body</u>要素に対する位置を返す<br>●要素が非表示 (この要素または任意の祖先の style.display が "none")である場合、または要素自体の style.position が "fixed" に設定される場合、このプロパティは WebKit で null を返す</p>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>getBoundingClientRect() (js)</dt>
+                    <dd>
+                        <p>document.getElementsByClassName('ex')[0].getBoundingClientRect().x/y/width/height</p>
+                        <p>viewport(ブラウザ内表示範囲*アドレスバーとブラウザのスクロールバーを含まない)に対する位置を返す</p>
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>window.scrollY (js)/別名「window.pageYOffset」</dt>
+                    <dd>
+                        <p>文書が現在垂直方向にスクロールしているピクセル数を返します。</p>
+                        <p><mark>クロスブラウザー互換性のため、window.scrollY ではなく window.pageYOffset を使用します。(IE11)</mark></p>
+                        <p>使う例：（<b>要素のpage先頭までの距離を求める</b>）<br>
+                            window.pageYOffset + document.querySelector("xx").getBoundingClientRect().top <br>
+                            ＝$('xx').offset().top;
+                        </p>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+
+        <div class="ex">
+            <div class="inner"></div>
+        </div>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var ex = document.getElementsByClassName('ex')[0],
+            inner = document.getElementsByClassName('inner')[0],
+            exClientTop = ex.clientTop,
+            exClientHeight = ex.clientHeight,
+            exOffsetHeight = ex.offsetHeight,
+            exScrollHeight = ex.scrollHeight;
+
+        var tl = document.querySelectorAll('.tl'),
+            info = document.querySelectorAll('.info');
+
+        tl[0].addEventListener("click", function() {
+            console.log(this);
+        })
+
+        console.log(tl);
+        ex.onscroll = function(arguments) {
+            $(".display").text("scrollTop: " + ex.scrollTop);
+        }
+
+        $(".display").text("clientHeight: " + exClientHeight + "  , offsetHeight: " + exOffsetHeight + "  , scrollHeight: " + exScrollHeight + "  ,clientTop: " + exClientTop);
+
+        console.log(inner.offsetParent);
+
+        console.log(ex.getBoundingClientRect());
+    </script>
+</body></html>
