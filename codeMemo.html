@@ -19,13 +19,18 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        body {
-            min-height: 100vh;
+        li {
+            list-style: none;
         }
 
         strong {
-            color: darkred;
-            font-size: 1.1em;
+            color: orangered;
+            font-weight: 400;
+        }
+
+        mark {
+            padding: 5px 10px;
+            background-color: chartreuse;
         }
 
         span {
@@ -38,11 +43,12 @@
         }
 
         body {
-            padding: 0 40px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            background-color: #e5f2e5;
-            color: #481700;
+            min-height: 100vh;
+            padding: 0 20px;
+            letter-spacing: 0.05em;
+            font-size: 1.4rem;
+            background-color: #2f2f2f;
+            color: #FFF;
         }
 
         main {
@@ -53,32 +59,50 @@
             display: grid;
             grid-template: auto/repeat(auto-fit, minmax(150px, 1fr));
             grid-gap: 10px;
-            background-color: #333;
             padding: 10px;
         }
 
         .tl {
-            font-size: 2rem;
-            color: #333;
-            background-color: orange;
-            padding-left: 1em;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: #fff;
+            background-color: seagreen;
+            padding: 10px;
             /*            border-right: 10px solid black;*/
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
         .info {
-            /*            display: none;*/
+            margin-top: 50px;
+        }
+
+        .info h2 {
+            color: greenyellow;
+            font-size: 3rem;
         }
 
         dl {
-            margin: 50px 0 0;
-            border-bottom: 10px solid #666;
+            margin: 10px 0 0;
+            border-bottom: 2px solid #666;
+        }
+
+        dl:last-child {
+            border-bottom: 2px solid #adadad;
         }
 
         dt {
             font-weight: bold;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+        }
+
+        dt:before {
+            content: "";
+            display: inline-block;
+            background-color: chartreuse;
+            width: 4px;
+            height: 1em;
+            margin-right: 6px;
         }
 
         dd {
@@ -86,14 +110,6 @@
             padding: 0 20px 10px;
         }
 
-        dt:before {
-            content: "";
-            display: inline-block;
-            background-color: orangered;
-            width: 1em;
-            height: 1em;
-            margin-right: 6px;
-        }
 
         img {
             margin-top: 20px;
@@ -116,6 +132,7 @@
             height: 1000px;
             background-color: indianred;
         }
+
     </style>
 </head>
 
@@ -153,6 +170,38 @@
                     <dd>
                         ●exのように、複数背景を指定することが可能だ。<br>
                         ただ、最後の一枚だけにbackground-colorを指定できる
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>Hide scroll bar, but while still being able to scroll</dt>
+                    <dd>
+                        <p>ex:</p>
+                        <p>.scrollWithoutScrollbar {
+                            width: 100%;
+                            white-space: nowrap;
+                            overflow-x: scroll;
+                            -ms-overflow-style: none; /* Internet Explorer 10+ */
+                            scrollbar-width: none; /* Firefox */
+                            }
+                            .scrollWithoutScrollbar::-webkit-scrollbar {
+                            display: none; /* Safari and Chrome */
+                            }</p>
+                    </dd>
+                    <dd>
+                        <p>or</p>
+                        <p>#parent{
+                            width: 100%;
+                            height: 100%;
+                            overflow: hidden;
+                            }
+
+                            #child{
+                            width: 100%;
+                            height: 100%;
+                            overflow-y: scroll;
+                            padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+                            box-sizing: content-box; /* So the width will be 100% + 17px */
+                            }</p>
                     </dd>
                 </dl>
             </li>
@@ -241,7 +290,7 @@
                 <dl>
                     <dt>親ディレクトリへの移動</dt>
                     <dd>●1つ親のディレクトリ</dd>
-                    <dd><mark><strong>..</strong></mark></dd>
+                    <dd><mark>..</mark></dd>
                     <dd>cd ..</dd>
                     <dd>●ホームディレクトリ</dd>
                     <dd>cd</dd>
@@ -342,6 +391,7 @@
                     <dd>
                         <pre>[配列].forEach();<br>var array1 = [2,3,4,5];<br>array1.forEach( function( <mark>v, i, a</mark> ){
                             });</pre>
+                        <pre><mark>IE 対策</mark><u>Array.prototype.slice.call</u>(arry1)</pre>
                     </dd>
                     <dd>v&rarr;要素の値<br>
                         i&rarr;インデックス番号<br>
@@ -410,7 +460,7 @@
                     <dd>
                         <p>document.getElementsByClassName('ex')[0].clientHeight;</p>
                         <p>$(".ex").innerHeight();</p>
-                        <img src="../img/clientHeight.png" alt="">
+                        <img src="img/clientHeight.png" alt="">
                     </dd>
                 </dl>
 
@@ -419,7 +469,7 @@
                     <dd>
                         <p>document.getElementsByClassName('ex')[0].offsetHeight;</p>
                         <p>$(".ex").outerHeight()</p>
-                        <img src="../img/offsetHeight.png" alt="">
+                        <img src="img/offsetHeight.png" alt="">
                     </dd>
                 </dl>
 
@@ -430,7 +480,7 @@
                         <p>--The following equivalence returns true if an element is at the end of its scroll, false if it isn't.</p>
                         <p>--element.scrollHeight - element.scrollTop === element.clientHeight</p>
                         <p>*overflowの設定に関係なく、同じ数値が返る</p>
-                        <img src="../img/scrollHeight.png" alt="">
+                        <img src="img/scrollHeight.png" alt="">
                     </dd>
                 </dl>
 
@@ -441,7 +491,7 @@
                         <p>window.pageYOffsetはwindowだけのスクロール量を返す</p>
                         <p>上へスクロールした分の数値</p>
                         <p>targetの先頭からtargetのtop枠まで（border-topを含む）</p>
-                        <img src="../img/scrollTop.png" alt="">
+                        <img src="img/scrollTop.png" alt="">
                     </dd>
                 </dl>
 
@@ -450,7 +500,7 @@
                     <dd>
                         <p>document.getElementsByClassName('ex')[0].clientTop;</p>
                         <p>border-topの数値を返す</p>
-                        <img src="../img/clientTop.png" alt="">
+                        <img src="img/clientTop.png" alt="">
                     </dd>
                 </dl>
 
@@ -479,6 +529,10 @@
                             window.pageYOffset + document.querySelector("xx").getBoundingClientRect().top <br>
                             ＝$('xx').offset().top;
                         </p>
+                        <p>使う例：（<b>target先頭までscroll</b>）<br></p>
+                        $('html,body').animate({
+                        scrollTop: window.pageYOffset + document.getElementById('XX').getBoundingClientRect().top
+                        }, 200, 'swing');
                     </dd>
                 </dl>
             </li>
@@ -514,5 +568,8 @@
         console.log(inner.offsetParent);
 
         console.log(ex.getBoundingClientRect());
+
     </script>
-</body></html>
+</body>
+
+</html>
